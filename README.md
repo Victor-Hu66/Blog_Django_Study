@@ -1,1 +1,1 @@
-# Blog_Django_Study
+Django study
