@@ -5,6 +5,17 @@
     
 <img src="{{ object.image.url }}" alt="">
 <p>{{ object.content }}</p>
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Comment</button>
+</form> <br>
 
+{% for comment in object.comments  %}
+<p>comment by {{ user }}</p>
+{{ comment.content }} 
+<hr>   
+{% endfor %}
+    
 {% endblock content %}
     

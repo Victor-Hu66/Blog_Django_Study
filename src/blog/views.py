@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import Post
-from .forms import PostForm
+from .forms import PostForm, CommentForm
 
 # Create your views here.
 
@@ -33,8 +33,21 @@ def post_create(request):
     return render(request, "blog/post_create.html", context)
 
 def post_detail(request, slug):
+    form = CommentForm()
     obj = get_object_or_404(Post, slug=slug)
-    context = {"object": obj}
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid:
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.post = obj
+            comment.save()
+            return redirect('blog:detail', slug=slug)
+            # return redirect(request.path)  ------>>> aynı sayfada kalma bu da
+    context = {
+        "object": obj,
+        "form" : form
+        }
     return render(request, "blog/post_detail.html", context)
 
 def post_update(request, slug):
@@ -58,3 +71,6 @@ def post_delete(request, slug):
     }
     return render(request, "blog/post_delete.html", context)
 
+def like(request, slug):
+    if request.method == "POST":
+        obj = get_object_or_404()

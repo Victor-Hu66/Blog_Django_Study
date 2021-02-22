@@ -122,5 +122,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
+STATICFILES_DIRS = [BASE_DIR / "static"] # src altında static adlı folder açıp staticlerini orada tutmak istersen bu şekilde yaz!
 
 MEDIA_ROOT = BASE_DIR / "media_root"
